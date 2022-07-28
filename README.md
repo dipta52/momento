@@ -18,7 +18,6 @@
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-electricity.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com)
 
-
 </div>
 
 ## About The Project
@@ -29,8 +28,8 @@ Description goes here.
 
 ### Built With
 
--   [Next.js](https://nextjs.org/)
--   [Firebase](https://firebase.google.com/)
+- [Next.js](https://nextjs.org/)
+- [Firebase](https://firebase.google.com/)
 
 <!-- GETTING STARTED -->
 
@@ -42,17 +41,17 @@ To get a local copy up and running follow these simple example steps.
 ### Installation
 
 1. Clone the repo
-    ```sh
-    git clone https://github.com/dipta52/momento.git
-    ```
+   ```sh
+   git clone https://github.com/dipta52/momento.git
+   ```
 2. Install NPM packages
-    ```sh
-    npm install
-    ```
+   ```sh
+   npm install
+   ```
 3. Rename the `env.example` to `env.local` & update you enviroment variables.
-    ```js
-    API_KEY = YOUR API KEYS
-    ```
+   ```js
+   API_KEY = YOUR API KEYS
+   ```
 
 ### After Setting Up
 
