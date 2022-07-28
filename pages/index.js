@@ -1,8 +1,7 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import Whateveer from './folder2/whateveer'
+import React from "react";
 
-export default function Home() {
-  return <Whateveer/>
-}
+const HomePage = () => {
+	return <p>This is your homepage</p>;
+};
+
+export default HomePage;
