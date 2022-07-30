@@ -1,53 +1,87 @@
 import InputField from "@components/ui/InputField";
 import { useAuth } from "@contexts/AuthContext";
-import { doc, setDoc } from "firebase/firestore";
+import { collection, doc, onSnapshot, query, setDoc } from "firebase/firestore";
 import { Form, Formik } from "formik";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { db } from "../../firebase";
 
-const RegisterSchema = Yup.object().shape({
-	firstname: Yup.string().required("Required"),
-	lastname: Yup.string().required("Required"),
-	email: Yup.string().email("Invalid Email").required("Required"),
-	password: Yup.string()
-		.min(6, "Too Short")
-		.max(30, "Too Long")
-		.required("Required"),
-});
-
 const RegisterForm = () => {
+	const router = useRouter();
+	const { redirect } = router.query;
 	const { signUp, updateProfileDetails, sendVerificationEmail } = useAuth();
+
+	const [usernames, setUsernames] = useState([]);
+
+	const RegisterSchema = Yup.object().shape({
+		firstname: Yup.string().required("Required"),
+		lastname: Yup.string().required("Required"),
+		email: Yup.string().email("Invalid Email").required("Required"),
+		password: Yup.string()
+			.min(6, "Too Short")
+			.max(30, "Too Long")
+			.required("Required"),
+		username: Yup.string()
+			.min(3, "Too Short")
+			.max(30, "Too Long")
+			.required("Required")
+			.notOneOf(usernames, "Already Taken"),
+	});
+
+	useEffect(
+		() =>
+			onSnapshot(query(collection(db, "usernames")), (snapshot) => {
+				setUsernames(snapshot.docs.map((doc) => doc.id));
+			}),
+		[]
+	);
 
 	return (
 		<Formik
 			initialValues={{
 				firstname: "",
 				lastname: "",
+				username: "",
 				email: "",
 				password: "",
 			}}
 			validationSchema={RegisterSchema}
 			onSubmit={async (values, actions) => {
-				signUp(values.email, values.password)
-					.then((userCredential) => {
-						const user = userCredential.user;
-						updateProfileDetails(
-							user,
-							`${values.firstname} ${values.lastname}`
-						);
-						setDoc(doc(db, "users", user.uid), {});
-						actions.setSubmitting(false);
-						sendVerificationEmail(user).then(() => {
-							// router.push(
-							// 	"/auth/verifyemail",
-							// 	"/auth/verifyemail"
-							// );
+				if (!usernames.includes(values.username)) {
+					signUp(values.email, values.password)
+						.then(async (userCredential) => {
+							const user = userCredential.user;
+							setDoc(doc(db, "usernames", values.username), {
+								uid: user.uid,
+								images: [],
+							})
+								.then(() => {
+									updateProfileDetails(
+										user,
+										`${values.firstname} ${values.lastname}`
+									);
+									actions.setSubmitting(false);
+									sendVerificationEmail(user).then(() => {
+										if (redirect) {
+											router.replace(redirect);
+										} else {
+											router.replace("/");
+										}
+									});
+								})
+								.catch((error) => {
+									actions.setSubmitting(false);
+									console.error(error.message);
+								});
+						})
+						.catch((error) => {
+							actions.setSubmitting(false);
+							console.error(error.message);
 						});
-					})
-					.catch((error) => {
-						actions.setSubmitting(false);
-						console.error(error.message);
-					});
+				} else {
+					console.error("Username already taken");
+				}
 			}}
 		>
 			{({ isSubmitting }) => (
@@ -65,6 +99,13 @@ const RegisterForm = () => {
 						placeholder="Last Name"
 						type="text"
 						autoComplete="lastname"
+					/>
+					<InputField
+						name="username"
+						label="Username"
+						placeholder="Username"
+						type="text"
+						autoComplete="username"
 					/>
 
 					<InputField

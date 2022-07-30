@@ -1,6 +1,16 @@
 import { getFromStorage, setToStorage } from "@components/helpers/localstorage";
 import {
-	createUserWithEmailAndPassword, GoogleAuthProvider, linkWithPopup, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, unlink, updateProfile
+	createUserWithEmailAndPassword,
+	GoogleAuthProvider,
+	linkWithPopup,
+	onAuthStateChanged,
+	sendEmailVerification,
+	sendPasswordResetEmail,
+	signInWithEmailAndPassword,
+	signInWithPopup,
+	signOut,
+	unlink,
+	updateProfile,
 } from "firebase/auth";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { isEqual } from "lodash";
@@ -19,7 +29,7 @@ const AuthProvider = ({ children }) => {
 	const [providers, setProviders] = useState();
 	const googleAuthProvider = new GoogleAuthProvider();
 
-	const signUp = (email, password) => {
+	const signUp = async (email, password) => {
 		return createUserWithEmailAndPassword(auth, email, password);
 	};
 
@@ -162,4 +172,3 @@ const AuthProvider = ({ children }) => {
 
 export { AuthProvider };
 export { useAuth };
-
