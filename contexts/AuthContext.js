@@ -1,22 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
-import {
-	createUserWithEmailAndPassword,
-	signInWithEmailAndPassword,
-	signOut,
-	onAuthStateChanged,
-	sendPasswordResetEmail,
-	updateProfile,
-	sendEmailVerification,
-	signInWithPopup,
-	GoogleAuthProvider,
-	unlink,
-	linkWithPopup,
-} from "firebase/auth";
-import { isEqual } from "lodash";
 import { getFromStorage, setToStorage } from "@components/helpers/localstorage";
-import { updateDoc, doc, setDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import {
+	createUserWithEmailAndPassword, GoogleAuthProvider, linkWithPopup, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, unlink, updateProfile
+} from "firebase/auth";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { isEqual } from "lodash";
+import React, { useContext, useEffect, useState } from "react";
+import { auth, db } from "../firebase";
 
 const AuthContext = React.createContext();
 
@@ -173,3 +162,4 @@ const AuthProvider = ({ children }) => {
 
 export { AuthProvider };
 export { useAuth };
+
