@@ -70,21 +70,11 @@ const AuthProvider = ({ children }) => {
 		return updateProfile(user, { displayName, photoURL });
 	};
 
-	// const updateEmail = (email) => {
-	// 	return currentUser.updateEmail(email);
-	// };
-
-	// const updatePassword = (password) => {
-	// 	return currentUser.updatePassword(password);
-	// };
-
 	const unsubscribe = useEffect(() => {
 		onAuthStateChanged(auth, async (user) => {
 			setCurrentUser(user);
 			setProviders(
-				user
-					? user.providerData.map((provider) => provider.providerId)
-					: []
+				user ? user.providerData.map((provider) => provider.providerId) : []
 			);
 
 			if (user) {
@@ -135,9 +125,6 @@ const AuthProvider = ({ children }) => {
 								photoURL: user.photoURL,
 								providerData: user.providerData,
 								uid: user.uid,
-								addresses: [],
-								cartItems: [],
-								cartTotal: 0,
 							}).then(() => {
 								setToStorage(
 									"currentUserState",
