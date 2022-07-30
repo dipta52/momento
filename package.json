@@ -10,17 +10,24 @@
 		"lint:check": "eslint .",
 		"lint:fix": "eslint --fix .",
 		"format:check": "prettier --check .",
-		"format:write": "prettier --write ."
+		"format:write": "prettier --write .",
+		"pre": "eslint --fix . && prettier --write .",
+		"analyze": "cross-env ANALYZE=true next build"
 	},
 	"dependencies": {
 		"firebase": "^9.9.1",
+		"formik": "^2.2.9",
 		"lodash": "^4.17.21",
 		"next": "12.2.3",
+		"next-pwa": "^5.5.5",
 		"nprogress": "^0.2.0",
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"yup": "^0.32.11"
 	},
 	"devDependencies": {
+		"@next/bundle-analyzer": "^12.2.3",
+		"cross-env": "^7.0.3",
 		"eslint": "8.20.0",
 		"eslint-config-next": "12.2.3",
 		"eslint-plugin-react": "^7.30.1",
