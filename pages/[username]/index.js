@@ -1,6 +1,7 @@
 import FullPageLoadingSpinner from "@components/shared/FullPageLoadingSpinner";
 import { doc, onSnapshot } from "firebase/firestore";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useReducer } from "react";
 import { db } from "../../firebase";
@@ -62,6 +63,8 @@ const GalleryPage = () => {
 
 	return (
 		<>
+			<h1>{username}&apos;s Page</h1>
+			<Link href={`/${username}/edit`}>Edit?</Link>
 			{state.images.map((image, index) => (
 				<Image key={index} src={image.imageUrl} height="200" width="300" />
 			))}

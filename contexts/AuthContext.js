@@ -37,8 +37,8 @@ const AuthProvider = ({ children }) => {
 		return signInWithEmailAndPassword(auth, email, password);
 	};
 
-	const sendVerificationEmail = async () => {
-		return sendEmailVerification(currentUser);
+	const sendVerificationEmail = async (user) => {
+		return sendEmailVerification(user);
 	};
 
 	const signInWithGoogle = async () => {

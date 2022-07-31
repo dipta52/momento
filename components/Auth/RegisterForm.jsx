@@ -1,3 +1,4 @@
+import FullPageLoadingSpinner from "@components/shared/FullPageLoadingSpinner";
 import InputField from "@components/ui/InputField";
 import { useAuth } from "@contexts/AuthContext";
 import { collection, doc, onSnapshot, query, setDoc } from "firebase/firestore";
@@ -10,7 +11,8 @@ import { db } from "../../firebase";
 const RegisterForm = () => {
 	const router = useRouter();
 	const { redirect } = router.query;
-	const { signUp, updateProfileDetails, sendVerificationEmail } = useAuth();
+	const { signUp, updateProfileDetails, sendVerificationEmail, currentUser } =
+		useAuth();
 
 	const [usernames, setUsernames] = useState([]);
 
@@ -37,6 +39,11 @@ const RegisterForm = () => {
 		[]
 	);
 
+	if (currentUser) {
+		router.replace(redirect || "/");
+		return <FullPageLoadingSpinner />;
+	}
+
 	return (
 		<Formik
 			initialValues={{
@@ -61,7 +68,6 @@ const RegisterForm = () => {
 										user,
 										`${values.firstname} ${values.lastname}`
 									);
-									actions.setSubmitting(false);
 									sendVerificationEmail(user).then(() => {
 										if (redirect) {
 											router.replace(redirect);
@@ -69,6 +75,7 @@ const RegisterForm = () => {
 											router.replace("/");
 										}
 									});
+									actions.setSubmitting(false);
 								})
 								.catch((error) => {
 									actions.setSubmitting(false);

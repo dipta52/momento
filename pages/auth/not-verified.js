@@ -18,7 +18,7 @@ const NotVerifiedPage = () => {
 			<h1>Email Not Verified !</h1>
 			<p>Verification Status : {currentUser.emailVerified.toString()}</p>
 
-			<button onClick={() => sendVerificationEmail()}>
+			<button onClick={() => sendVerificationEmail(currentUser)}>
 				Send Verification Email
 			</button>
 
