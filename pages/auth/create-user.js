@@ -1,3 +1,4 @@
+import { withVerified } from "@components/routes";
 import FullPageLoadingSpinner from "@components/shared/FullPageLoadingSpinner";
 import InputField from "@components/ui/InputField";
 import { useAuth } from "@contexts/AuthContext";
@@ -95,4 +96,4 @@ const CreateUser = () => {
 	);
 };
 
-export default CreateUser;
+export default withVerified(CreateUser);

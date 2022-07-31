@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { useAuth } from "@contexts/AuthContext";
 import InputField from "@components/ui/InputField";
 import Link from "next/link";
+import { withAuthPages } from "@components/routes";
 
 const ForgotPasswordSchema = Yup.object().shape({
 	email: Yup.string().email("Invalid Email").required("Required"),
@@ -51,4 +52,4 @@ const ForgotPassword = () => {
 	);
 };
 
-export default ForgotPassword;
+export default withAuthPages(ForgotPassword);

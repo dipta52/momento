@@ -64,7 +64,7 @@ export const withVerified = (Component) => {
 			router
 				.replace(
 					{
-						pathname: "/profile",
+						pathname: "/auth/not-verified",
 						query: {
 							redirect: router.pathname,
 						},

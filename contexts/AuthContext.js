@@ -37,11 +37,11 @@ const AuthProvider = ({ children }) => {
 		return signInWithEmailAndPassword(auth, email, password);
 	};
 
-	const sendVerificationEmail = (user) => {
-		return sendEmailVerification(user);
+	const sendVerificationEmail = async () => {
+		return sendEmailVerification(currentUser);
 	};
 
-	const signInWithGoogle = () => {
+	const signInWithGoogle = async () => {
 		return signInWithPopup(auth, googleAuthProvider);
 	};
 

@@ -1,7 +1,6 @@
-import { withProtected } from "@components/routes";
+import { withVerified } from "@components/routes";
 import { useAuth } from "@contexts/AuthContext";
 import { useRouter } from "next/router";
-import React from "react";
 
 const ProfilePage = () => {
 	const { currentUser, logOut } = useAuth();
@@ -29,4 +28,4 @@ const ProfilePage = () => {
 	);
 };
 
-export default withProtected(ProfilePage);
+export default withVerified(ProfilePage);

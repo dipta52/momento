@@ -1,8 +1,10 @@
 import { useAuth } from "@contexts/AuthContext";
-import React from "react";
+import { useRouter } from "next/router";
 
 const GoogleSignIn = () => {
 	const { signInWithGoogle } = useAuth();
+
+	const router = useRouter();
 
 	return (
 		<button
@@ -11,6 +13,7 @@ const GoogleSignIn = () => {
 				signInWithGoogle()
 					.then((userCredential) => {
 						console.log(userCredential.user);
+						router.query.redirect = "/auth/create-user";
 					})
 					.catch((error) => {
 						console.error(error.message);
