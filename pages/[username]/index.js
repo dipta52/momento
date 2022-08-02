@@ -1,4 +1,5 @@
 import FullPageLoadingSpinner from "@components/shared/FullPageLoadingSpinner";
+import { useAuth } from "@contexts/AuthContext";
 import { doc, onSnapshot } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,6 +15,7 @@ const reducer = (state, action) => {
 				loading: false,
 				userExistence: true,
 				images: action.images,
+				uid: action.uid,
 			};
 		}
 		case "USER_NOT_FOUND": {
@@ -29,11 +31,13 @@ const reducer = (state, action) => {
 const GalleryPage = () => {
 	const router = useRouter();
 	const { username } = router.query;
+	const { currentUser } = useAuth();
 
 	const [state, dispatch] = useReducer(reducer, {
 		loading: true,
 		userExistence: true,
 		images: [],
+		uid: "",
 	});
 
 	useEffect(
@@ -43,6 +47,7 @@ const GalleryPage = () => {
 					dispatch({
 						type: "USER_FOUND",
 						images: doc.data().images,
+						uid: doc.data().uid,
 					});
 				} else {
 					dispatch({
@@ -61,10 +66,20 @@ const GalleryPage = () => {
 		return <div>User does not exist</div>;
 	}
 
+	if (state.images.length === 0) {
+		return <p>No Images Found</p>;
+	}
+
 	return (
 		<>
 			<h1>{username}&apos;s Page</h1>
-			<Link href={`/${username}/edit`}>Edit?</Link>
+
+			{state.uid === currentUser?.uid && (
+				<Link href={`/${username}/edit`}>Edit?</Link>
+			)}
+
+			<br />
+
 			{state.images.map((image, index) => (
 				<Image key={index} src={image.imageUrl} height="200" width="300" />
 			))}

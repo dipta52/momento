@@ -1,3 +1,4 @@
+import GalleryEditForm from "@components/Gallery/GalleryEditPage";
 import { withVerified } from "@components/routes";
 import FullPageLoadingSpinner from "@components/shared/FullPageLoadingSpinner";
 import { useAuth } from "@contexts/AuthContext";
@@ -68,7 +69,7 @@ const GalleryEditPage = () => {
 	return (
 		<div>
 			<h1>{username}&apos;s Edit Page</h1>
-			GalleryEditPage
+			<GalleryEditForm images={state.images} username={username} />
 		</div>
 	);
 };
