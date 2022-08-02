@@ -15,6 +15,11 @@
 		"analyze": "cross-env ANALYZE=true next build"
 	},
 	"dependencies": {
+		"@emotion/cache": "^11.10.1",
+		"@emotion/react": "^11.10.0",
+		"@emotion/server": "^11.10.0",
+		"@emotion/styled": "^11.10.0",
+		"@mui/material": "^5.9.3",
 		"firebase": "^9.9.1",
 		"formik": "^2.2.9",
 		"lodash": "^4.17.21",
