@@ -16,6 +16,7 @@ const InputField = ({
 		autoComplete,
 		disabled,
 	});
+	console.log(field);
 	return (
 		<div>
 			<label htmlFor={field.name}>
