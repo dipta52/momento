@@ -19,29 +19,29 @@ Router.events.on("routeChangeError", () => NProgress.done());
 const clientSideEmotionCache = createEmotionCache();
 
 function MyApp(props) {
-	const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
 
-	return (
-		<CacheProvider value={emotionCache}>
-			<Head>
-				<meta name="viewport" content="initial-scale=1, width=device-width" />
-			</Head>
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
-				<SnackbarProvider
-					anchorOrigin={{
-						vertical: "bottom",
-						horizontal: "center",
-					}}
-					preventDuplicate
-				>
-					<AuthProvider>
-						<Component {...pageProps} />
-					</AuthProvider>
-				</SnackbarProvider>
-			</ThemeProvider>
-		</CacheProvider>
-	);
+  return (
+    <CacheProvider value={emotionCache}>
+      <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <SnackbarProvider
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+          preventDuplicate
+        >
+          <AuthProvider>
+            <Component {...pageProps} />
+          </AuthProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </CacheProvider>
+  );
 }
 
 export default MyApp;

@@ -1,5 +1,5 @@
 import React from "react";
 
 export const LoadingSpinner = () => {
-	return <p>Loading...</p>;
+  return <p>Loading...</p>;
 };
