@@ -2,6 +2,7 @@ import { withVerified } from "@components/routes";
 import FullPageLoadingSpinner from "@components/shared/FullPageLoadingSpinner";
 import InputField from "@components/ui/InputField";
 import { useAuth } from "@contexts/AuthContext";
+import { Box, Button, Typography } from "@mui/material";
 import {
 	collection,
 	doc,
@@ -9,7 +10,7 @@ import {
 	onSnapshot,
 	query,
 	setDoc,
-	where,
+	where
 } from "firebase/firestore";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
@@ -75,21 +76,45 @@ const CreateUser = () => {
 				actions.setSubmitting(false);
 			}}
 		>
-			{({ isSubmitting }) => (
+			{({ isSubmitting, values }) => (
 				<Form>
-					<div>
-						<InputField
-							name="username"
-							label="Username"
-							placeholder="Username"
-							type="text"
-							autoComplete="username"
-						/>
+					<Box
+						sx={{
+							display: "grid",
+							placeItems: "center",
+							alignContent: "center",
+							height: "100vh",
+						}}
+					>
+						<Box>
+							<Typography
+								component="h1"
+								variant="h1"
+								fontSize="24px"
+								textAlign={"center"}
+							>
+								Choose a Username
+							</Typography>
+							<Typography component="h1" variant="h1" fontSize="16px">
+								We`ll use{" "}
+								{values.username ? <strong>{values.username}</strong> : `this`}{" "}
+								to identify you on the site
+							</Typography>
+						</Box>
+						<Box>
+							<InputField
+								name="username"
+								label="Username"
+								placeholder="Username"
+								type="text"
+								autoComplete="username"
+							/>
 
-						<button type="submit">
-							{isSubmitting ? "Loading" : "Continue"}
-						</button>
-					</div>
+							<Button type="submit" fullWidth>
+								{isSubmitting ? "Loading" : "Continue"}
+							</Button>
+						</Box>
+					</Box>
 				</Form>
 			)}
 		</Formik>

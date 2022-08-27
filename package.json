@@ -10,6 +10,7 @@
 		"lint:check": "eslint .",
 		"lint:fix": "eslint --fix .",
 		"format:check": "prettier --check .",
+		"check": "eslint . && prettier --check .",
 		"format:write": "prettier --write .",
 		"pre": "eslint --fix . && prettier --write .",
 		"analyze": "cross-env ANALYZE=true next build"
@@ -26,9 +27,11 @@
 		"nanoid": "^4.0.0",
 		"next": "12.2.3",
 		"next-pwa": "^5.5.5",
+		"notistack": "^2.0.5",
 		"nprogress": "^0.2.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
+		"react-icons": "^4.4.0",
 		"yup": "^0.32.11"
 	},
 	"devDependencies": {

@@ -1,3 +1,4 @@
+import { TextField } from "@mui/material";
 import { useField } from "formik";
 
 const InputField = ({
@@ -16,21 +17,19 @@ const InputField = ({
 		autoComplete,
 		disabled,
 	});
-	console.log(field);
 	return (
-		<div>
-			<label htmlFor={field.name}>
-				<span>{label}</span>
-			</label>
-			<input
-				disabled={disabled}
-				{...field}
-				type={type}
-				autoComplete={autoComplete}
-				placeholder={placeholder}
-			/>
-			{error && touched && <span>Error:{error}</span>}
-		</div>
+		<TextField
+			type={type}
+			fullWidth
+			margin="normal"
+			sx={{ width: "100%" }}
+			name={field.name}
+			label={label}
+			value={field.value}
+			onChange={field.onChange}
+			error={touched && Boolean(error)}
+			helperText={touched && error}
+		/>
 	);
 };
 

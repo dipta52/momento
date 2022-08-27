@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
 import GoogleSignIn from "./GoogleSignIn";
+import { useSnackbar } from "notistack";
+import { Button, Stack, Link as MLink } from "@mui/material";
+import { Box } from "@mui/system";
 
 const LoginSchema = Yup.object().shape({
 	email: Yup.string().email("Invalid Email").required("Required"),
@@ -15,6 +18,7 @@ const LoginForm = () => {
 	const { logIn } = useAuth();
 	const router = useRouter();
 	const { redirect } = router.query;
+	const { enqueueSnackbar } = useSnackbar();
 
 	return (
 		<Formik
@@ -23,6 +27,7 @@ const LoginForm = () => {
 			onSubmit={(values, actions) => {
 				logIn(values.email, values.password)
 					.then((userCredential) => {
+						enqueueSnackbar("Logged In Successfully", { variant: "success" });
 						actions.setSubmitting(false);
 						console.log(userCredential);
 						if (redirect) {
@@ -31,36 +36,53 @@ const LoginForm = () => {
 					})
 					.catch((error) => {
 						actions.setSubmitting(false);
+						enqueueSnackbar(error.message, { variant: "error" });
 						console.error(error.message);
 					});
 			}}
 		>
 			{({ isSubmitting }) => (
 				<Form>
-					<div>
-						<InputField
-							name="email"
-							label="Email"
-							placeholder="Email"
-							type="text"
-							autoComplete="username"
-						/>
-						<InputField
-							name="password"
-							label="Password"
-							placeholder="Password"
-							type="password"
-							autoComplete="current-password"
-						/>
+					<Stack
+						spacing={2}
+						sx={{
+							marginX: "8px",
+						}}
+					>
+						<Box>
+							<InputField
+								name="email"
+								label="Email"
+								placeholder="Email"
+								type="text"
+								autoComplete="username"
+							/>
 
-						<Link href="/auth/forgot-password">Forgot your Password ?</Link>
+							<InputField
+								name="password"
+								label="Password"
+								placeholder="Password"
+								type="password"
+								autoComplete="current-password"
+							/>
+						</Box>
 
-						<button type="submit">
+						<Link href="/auth/forgot-password">
+							<MLink
+								underline="hover"
+								textAlign={"right"}
+								sx={{ cursor: "pointer" }}
+							>
+								Forgot your Password ?
+							</MLink>
+						</Link>
+
+						<Button variant="contained" type="submit">
 							{isSubmitting ? "Loading" : "Sign In"}
-						</button>
+						</Button>
 
 						<GoogleSignIn />
-					</div>
+					</Stack>
 				</Form>
 			)}
 		</Formik>

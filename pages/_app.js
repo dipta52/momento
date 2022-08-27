@@ -10,6 +10,7 @@ import Router from "next/router";
 import NProgress from "nprogress";
 import createEmotionCache from "@lib/createEmotionCache";
 import theme from "@config/theme";
+import { SnackbarProvider } from "notistack";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -27,9 +28,17 @@ function MyApp(props) {
 			</Head>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
-				<AuthProvider>
-					<Component {...pageProps} />;
-				</AuthProvider>
+				<SnackbarProvider
+					anchorOrigin={{
+						vertical: "bottom",
+						horizontal: "center",
+					}}
+					preventDuplicate
+				>
+					<AuthProvider>
+						<Component {...pageProps} />
+					</AuthProvider>
+				</SnackbarProvider>
 			</ThemeProvider>
 		</CacheProvider>
 	);

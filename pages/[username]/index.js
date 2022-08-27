@@ -1,7 +1,13 @@
 import FullPageLoadingSpinner from "@components/shared/FullPageLoadingSpinner";
 import { useAuth } from "@contexts/AuthContext";
+import {
+	ImageList,
+	ImageListItem,
+	Link as MLink,
+	Typography,
+} from "@mui/material";
+import { Box } from "@mui/system";
 import { doc, onSnapshot } from "firebase/firestore";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useReducer } from "react";
@@ -72,17 +78,44 @@ const GalleryPage = () => {
 
 	return (
 		<>
-			<h1>{username}&apos;s Page</h1>
+			<Box textAlign={"center"} my={4}>
+				<Typography
+					variant="h1"
+					component="h1"
+					fontSize={"36px"}
+					fontWeight={400}
+				>
+					{username}&apos;s profile
+				</Typography>
 
-			{state.uid === currentUser?.uid && (
-				<Link href={`/${username}/edit`}>Edit?</Link>
-			)}
-
-			<br />
-
-			{state.images.map((image, index) => (
-				<Image key={index} src={image.imageUrl} height="200" width="300" />
-			))}
+				{state.uid === currentUser?.uid && (
+					<Typography
+						variant="h5"
+						component="h5"
+						fontSize={"16px"}
+						fontWeight={400}
+					>
+						<Link href={`/${username}/edit`}>
+							<MLink underline="hover" sx={{ cursor: "pointer" }}>
+								Edit?
+							</MLink>
+						</Link>
+					</Typography>
+				)}
+			</Box>
+			<ImageList sx={{ width: "100%" }} variant="masonry" cols={3} gap={8}>
+				{state.images.map((item) => (
+					<ImageListItem key={item.imageUrl}>
+						<img
+							src={`${item.imageUrl}?w=161&fit=crop&auto=format`}
+							srcSet={`${item.imageUrl}?w=161&fit=crop&auto=format&dpr=2 2x`}
+							alt={item.title}
+							loading="lazy"
+							layout="fill"
+						/>
+					</ImageListItem>
+				))}
+			</ImageList>
 		</>
 	);
 };

@@ -2,6 +2,7 @@ import GalleryEditForm from "@components/Gallery/GalleryEditPage";
 import { withVerified } from "@components/routes";
 import FullPageLoadingSpinner from "@components/shared/FullPageLoadingSpinner";
 import { useAuth } from "@contexts/AuthContext";
+import { Box, Typography } from "@mui/material";
 import { doc, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useEffect, useReducer } from "react";
@@ -68,7 +69,16 @@ const GalleryEditPage = () => {
 
 	return (
 		<div>
-			<h1>{username}&apos;s Edit Page</h1>
+			<Box textAlign={"center"} my={4}>
+				<Typography
+					variant="h1"
+					component="h1"
+					fontSize={"36px"}
+					fontWeight={400}
+				>
+					Editing <strong>{username}&apos;s</strong> profile
+				</Typography>
+			</Box>
 			<GalleryEditForm images={state.images} username={username} />
 		</div>
 	);

@@ -7,12 +7,15 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { db } from "../../firebase";
+import { useSnackbar } from "notistack";
+import { Button, Stack, Box } from "@mui/material";
 
 const RegisterForm = () => {
 	const router = useRouter();
 	const { redirect } = router.query;
 	const { signUp, updateProfileDetails, sendVerificationEmail, currentUser } =
 		useAuth();
+	const { enqueueSnackbar } = useSnackbar();
 
 	const [usernames, setUsernames] = useState([]);
 
@@ -75,6 +78,9 @@ const RegisterForm = () => {
 											router.replace("/");
 										}
 									});
+									enqueueSnackbar("Logged In Successfully", {
+										variant: "success",
+									});
 									actions.setSubmitting(false);
 								})
 								.catch((error) => {
@@ -83,6 +89,9 @@ const RegisterForm = () => {
 								});
 						})
 						.catch((error) => {
+							enqueueSnackbar(error.message, {
+								variant: "error",
+							});
 							actions.setSubmitting(false);
 							console.error(error.message);
 						});
@@ -93,44 +102,59 @@ const RegisterForm = () => {
 		>
 			{({ isSubmitting }) => (
 				<Form>
-					<InputField
-						name="firstname"
-						label="First Name"
-						placeholder="First Name"
-						type="text"
-						autoComplete="firstname"
-					/>
-					<InputField
-						name="lastname"
-						label="Last Name"
-						placeholder="Last Name"
-						type="text"
-						autoComplete="lastname"
-					/>
-					<InputField
-						name="username"
-						label="Username"
-						placeholder="Username"
-						type="text"
-						autoComplete="username"
-					/>
+					<Stack
+						spacing={2}
+						sx={{
+							marginX: "8px",
+						}}
+					>
+						<Box>
+							<Stack direction="row" gap={2}>
+								<InputField
+									name="firstname"
+									label="First Name"
+									placeholder="First Name"
+									type="text"
+									autoComplete="firstname"
+								/>
+								<InputField
+									name="lastname"
+									label="Last Name"
+									placeholder="Last Name"
+									type="text"
+									autoComplete="lastname"
+								/>
+							</Stack>
+							<InputField
+								name="email"
+								label="Email"
+								placeholder="Email"
+								type="email"
+								autoComplete="email"
+							/>
+							<Stack direction="row" gap={2}>
+								<InputField
+									name="username"
+									label="Username"
+									placeholder="Username"
+									type="text"
+									autoComplete="username"
+								/>
 
-					<InputField
-						name="email"
-						label="Email"
-						placeholder="Email"
-						type="email"
-						autoComplete="email"
-					/>
-					<InputField
-						name="password"
-						label="Password"
-						placeholder="Password"
-						type="password"
-						autoComplete="current-password"
-					/>
+								<InputField
+									name="password"
+									label="Password"
+									placeholder="Password"
+									type="password"
+									autoComplete="current-password"
+								/>
+							</Stack>
+						</Box>
 
-					<button type="submit">{isSubmitting ? "Loading" : "Register"}</button>
+						<Button variant="contained" type="submit">
+							{isSubmitting ? "Loading" : "Register"}
+						</Button>
+					</Stack>
 				</Form>
 			)}
 		</Formik>
