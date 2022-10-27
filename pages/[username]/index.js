@@ -1,17 +1,24 @@
 import FullPageLoadingSpinner from "@components/shared/FullPageLoadingSpinner";
 import { useAuth } from "@contexts/AuthContext";
 import {
+  IconButton,
   ImageList,
   ImageListItem,
   Link as MLink,
+  Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { doc, onSnapshot } from "firebase/firestore";
+import { useWidth } from "@hooks/useWidth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useReducer } from "react";
 import { db } from "../../firebase";
+import { AiOutlineZoomIn, AiOutlineZoomOut } from "react-icons/ai";
+import { useState } from "react";
+import Navbar from "@components/shared/Navbar";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -35,9 +42,12 @@ const reducer = (state, action) => {
 };
 
 const GalleryPage = () => {
+  const width = useWidth();
   const router = useRouter();
   const { username } = router.query;
   const { currentUser } = useAuth();
+
+  const [zoom, setZoom] = useState(width === "xs" ? 2 : width === "sm" ? 3 : 5);
 
   const [state, dispatch] = useReducer(reducer, {
     loading: true,
@@ -78,12 +88,13 @@ const GalleryPage = () => {
 
   return (
     <>
+      <Navbar />
       <Box textAlign={"center"} my={4}>
         <Typography
           variant="h1"
           component="h1"
           fontSize={"36px"}
-          fontWeight={400}
+          fontWeight={300}
         >
           {username}&apos;s profile
         </Typography>
@@ -103,7 +114,34 @@ const GalleryPage = () => {
           </Typography>
         )}
       </Box>
-      <ImageList sx={{ width: "100%" }} variant="masonry" cols={3} gap={8}>
+      <Stack
+        direction="row"
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <Typography variant="h2" component="h2">
+          Images
+        </Typography>
+
+        {/* <Box>
+          <Button type="submit" size="large" disabled={!dirty}>
+            {isSubmitting ? "Updaing  ..." : "Update Gallery"}
+          </Button>
+        </Box> */}
+        <Box textAlign={"right"} m={4}>
+          <Tooltip title="Zoom In">
+            <IconButton onClick={() => setZoom((zoom) => zoom - 1)}>
+              <AiOutlineZoomIn />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Zoom Out">
+            <IconButton onClick={() => setZoom((zoom) => zoom + 1)}>
+              <AiOutlineZoomOut />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Stack>
+      <ImageList sx={{ width: "100%" }} variant="masonry" cols={zoom} gap={8}>
         {state.images.map((item) => (
           <ImageListItem key={item.imageUrl}>
             <img

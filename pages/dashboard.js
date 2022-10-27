@@ -1,4 +1,5 @@
 import { withVerified } from "@components/routes";
+import Navbar from "@components/shared/Navbar";
 import { useAuth } from "@contexts/AuthContext";
 import { useRouter } from "next/router";
 
@@ -8,6 +9,7 @@ const ProfilePage = () => {
 
   return (
     <>
+      <Navbar />
       <h1>Profile</h1>
       <p>{JSON.stringify(currentUser, null, 4)}</p>
 

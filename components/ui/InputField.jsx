@@ -8,6 +8,7 @@ const InputField = ({
   type,
   autoComplete,
   disabled,
+  size,
 }) => {
   const [field, { error, touched }] = useField({
     name,
@@ -29,12 +30,14 @@ const InputField = ({
       onChange={field.onChange}
       error={touched && Boolean(error)}
       helperText={touched && error}
+      size={size}
     />
   );
 };
 
 InputField.defaultProps = {
   disabled: false,
+  size: "normal",
 };
 
 export default InputField;

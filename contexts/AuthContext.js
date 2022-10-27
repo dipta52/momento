@@ -10,9 +10,16 @@ import {
   signInWithPopup,
   signOut,
   unlink,
-  updateProfile,
+  updateProfile
 } from "firebase/auth";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc, getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where
+} from "firebase/firestore";
 import { isEqual } from "lodash";
 import React, { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase";
@@ -27,6 +34,7 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState();
   const [providers, setProviders] = useState();
+  const [username, setUsername] = useState();
   const googleAuthProvider = new GoogleAuthProvider();
 
   const signUp = async (email, password) => {
@@ -77,6 +85,16 @@ const AuthProvider = ({ children }) => {
       );
 
       if (user) {
+        const q = query(
+          collection(db, "usernames"),
+          where("uid", "==", user.uid)
+        );
+
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          setUsername(doc.id);
+        });
+
         if (
           !isEqual(
             {
@@ -161,6 +179,7 @@ const AuthProvider = ({ children }) => {
     signInWithGoogle,
     linkGoogleAccount,
     unLinkGoogleAccount,
+    username,
   };
 
   return (
@@ -172,3 +191,4 @@ const AuthProvider = ({ children }) => {
 
 export { AuthProvider };
 export { useAuth };
+

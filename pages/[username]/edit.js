@@ -1,6 +1,7 @@
 import GalleryEditForm from "@components/Gallery/GalleryEditPage";
 import { withVerified } from "@components/routes";
 import FullPageLoadingSpinner from "@components/shared/FullPageLoadingSpinner";
+import Navbar from "@components/shared/Navbar";
 import { useAuth } from "@contexts/AuthContext";
 import { Box, Typography } from "@mui/material";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -68,19 +69,22 @@ const GalleryEditPage = () => {
   }
 
   return (
-    <div>
-      <Box textAlign={"center"} my={4}>
-        <Typography
-          variant="h1"
-          component="h1"
-          fontSize={"36px"}
-          fontWeight={400}
-        >
-          Editing <strong>{username}&apos;s</strong> profile
-        </Typography>
-      </Box>
-      <GalleryEditForm images={state.images} username={username} />
-    </div>
+    <>
+      <Navbar />
+      <div>
+        <Box textAlign={"center"} my={4}>
+          <Typography
+            variant="h1"
+            component="h1"
+            fontSize={"36px"}
+            fontWeight={300}
+          >
+            Editing <strong>{username}&apos;s</strong> profile
+          </Typography>
+        </Box>
+        <GalleryEditForm images={state.images} username={username} />
+      </div>
+    </>
   );
 };
 
