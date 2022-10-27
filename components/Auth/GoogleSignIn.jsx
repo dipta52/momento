@@ -1,28 +1,36 @@
 import { useAuth } from "@contexts/AuthContext";
+import { Button } from "@mui/material";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import { FcGoogle } from "react-icons/fc";
 
 const GoogleSignIn = () => {
-	const { signInWithGoogle } = useAuth();
+  const { signInWithGoogle } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
 
-	const router = useRouter();
+  const router = useRouter();
 
-	return (
-		<button
-			type="button"
-			onClick={() => {
-				signInWithGoogle()
-					.then((userCredential) => {
-						console.log(userCredential.user);
-						router.query.redirect = "/auth/create-user";
-					})
-					.catch((error) => {
-						console.error(error.message);
-					});
-			}}
-		>
-			Sign in with Google
-		</button>
-	);
+  return (
+    <Button
+      type="button"
+      variant="outlined"
+      startIcon={<FcGoogle />}
+      onClick={() => {
+        signInWithGoogle()
+          .then((userCredential) => {
+            console.log(userCredential.user);
+            enqueueSnackbar("Logged In Successfully", { variant: "success" });
+            router.query.redirect = "/auth/create-user";
+          })
+          .catch((error) => {
+            console.error(error.message);
+            enqueueSnackbar(error.message, { variant: "error" });
+          });
+      }}
+    >
+      Continue with Google
+    </Button>
+  );
 };
 
 export default GoogleSignIn;

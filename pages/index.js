@@ -1,7 +1,12 @@
+import Navbar from "@components/shared/Navbar";
 import React from "react";
 
 const HomePage = () => {
-	return <p>This is your homepage</p>;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 };
 
 export default HomePage;
