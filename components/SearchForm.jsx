@@ -9,6 +9,7 @@ import FullPageLoadingSpinner from "./shared/FullPageLoadingSpinner";
 
 const SearchForm = () => {
   const [searchKey, setSearchKey] = useState();
+  const [dirty, setDirty] = useState(false);
   const [usernames, setUsernames] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -41,7 +42,11 @@ const SearchForm = () => {
           <TextField
             {...params}
             value={searchKey}
-            onChange={(e) => setSearchKey(e.currentTarget.value)}
+            error={dirty && !searchKey}
+            onChange={(e) => {
+              setDirty(true);
+              setSearchKey(e.currentTarget.value);
+            }}
             label="Search Username"
             InputProps={{
               ...params.InputProps,
@@ -54,7 +59,12 @@ const SearchForm = () => {
         <Button
           variant="outlined"
           startIcon={<AiOutlineSearch />}
-          onClick={() => router.push(`/${searchKey}`)}
+          onClick={() => {
+            setDirty(true);
+            if (searchKey) {
+              router.push(`/${searchKey}`);
+            }
+          }}
         >
           Search
         </Button>

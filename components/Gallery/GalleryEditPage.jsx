@@ -8,7 +8,7 @@ import {
   LinearProgress,
   Stack,
   Tooltip,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { doc, updateDoc } from "firebase/firestore";
@@ -16,7 +16,7 @@ import {
   deleteObject,
   getDownloadURL,
   ref,
-  uploadBytesResumable
+  uploadBytesResumable,
 } from "firebase/storage";
 import { FieldArray, Form, Formik } from "formik";
 import { nanoid } from "nanoid";
