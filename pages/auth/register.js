@@ -16,7 +16,7 @@ const RegisterPage = () => {
         }}
       >
         <Box sx={{ width: "80%" }}>
-          <Link href="/auth/forgot-password">
+          <Link href="/">
             <MLink underline="hover" sx={{ cursor: "pointer" }}>
               Return Home,
             </MLink>

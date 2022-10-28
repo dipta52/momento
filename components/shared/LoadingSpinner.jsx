@@ -1,5 +1,12 @@
-import React from "react";
-
 export const LoadingSpinner = () => {
-  return <p>Loading...</p>;
+  return (
+    <div className="sk-chase">
+      <div className="sk-chase-dot"></div>
+      <div className="sk-chase-dot"></div>
+      <div className="sk-chase-dot"></div>
+      <div className="sk-chase-dot"></div>
+      <div className="sk-chase-dot"></div>
+      <div className="sk-chase-dot"></div>
+    </div>
+  );
 };

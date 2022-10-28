@@ -10,15 +10,16 @@ import {
   signInWithPopup,
   signOut,
   unlink,
-  updateProfile
+  updateProfile,
 } from "firebase/auth";
 import {
   collection,
-  doc, getDocs,
+  doc,
+  getDocs,
   query,
   setDoc,
   updateDoc,
-  where
+  where,
 } from "firebase/firestore";
 import { isEqual } from "lodash";
 import React, { useContext, useEffect, useState } from "react";
@@ -191,4 +192,3 @@ const AuthProvider = ({ children }) => {
 
 export { AuthProvider };
 export { useAuth };
-

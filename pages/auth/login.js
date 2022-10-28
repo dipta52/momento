@@ -58,7 +58,7 @@ const LoginPage = () => {
           fontWeight={400}
         >
           Dont have a account,{" "}
-          <Link href="/auth/register	">
+          <Link href="/auth/register">
             <MLink underline="hover" sx={{ cursor: "pointer" }}>
               Register ?
             </MLink>

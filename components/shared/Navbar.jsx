@@ -294,6 +294,7 @@ const Navbar = () => {
                 variant="outlined"
                 color="inherit"
                 onClick={() => router.push("/auth/register")}
+                sx={{ whiteSpace: "nowrap" }}
               >
                 Get Started
               </Button>

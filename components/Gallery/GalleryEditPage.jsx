@@ -10,6 +10,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/system";
 import { doc, updateDoc } from "firebase/firestore";
 import {
   deleteObject,
@@ -32,6 +33,7 @@ const GalleryEditForm = ({ images, username }) => {
   const [selectedFile, setSelectedFile] = useState();
   const [deletedImages, setDeletedImages] = useState([]);
   const [preview, setPreview] = useState();
+  const theme = useTheme();
 
   const [zoom, setZoom] = useState(width === "xs" ? 2 : width === "sm" ? 3 : 5);
 
@@ -191,7 +193,18 @@ const GalleryEditForm = ({ images, username }) => {
                 </div>
                 <Stack
                   direction="row"
-                  justifyContent={"space-between"}
+                  sx={{
+                    justifyContent: {
+                      md: "space-between",
+                      sm: "center",
+                      xs: "center",
+                    },
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 1,
+                    backgroundColor: theme.palette.background.default,
+                  }}
+                  flexWrap={"wrap"}
                   alignItems={"center"}
                 >
                   <Typography variant="h2" component="h2">
@@ -199,11 +212,17 @@ const GalleryEditForm = ({ images, username }) => {
                   </Typography>
 
                   <Box>
-                    <Button type="submit" size="large" disabled={!dirty}>
+                    <Button
+                      type="submit"
+                      size="large"
+                      color="success"
+                      variant="outlined"
+                      disabled={!dirty}
+                    >
                       {isSubmitting ? "Updaing  ..." : "Update Gallery"}
                     </Button>
                   </Box>
-                  <Box textAlign={"right"} m={4}>
+                  <Box textAlign={"right"} m={3}>
                     <Tooltip title="Zoom In">
                       <IconButton onClick={() => setZoom((zoom) => zoom - 1)}>
                         <AiOutlineZoomIn />
