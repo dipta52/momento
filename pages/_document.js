@@ -1,7 +1,6 @@
 import * as React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
-import theme from "@config/theme";
 import createEmotionCache from "@lib/createEmotionCache";
 
 export default class MyDocument extends Document {
@@ -89,7 +88,6 @@ export default class MyDocument extends Document {
             property="og:image"
             content="https://yourdomain.com/icons/apple-touch-icon.png"
           />
-          <meta name="theme-color" content={theme.palette.primary.main} />
           <link rel="shortcut icon" href="/static/favicon.ico" />
           <link
             rel="stylesheet"

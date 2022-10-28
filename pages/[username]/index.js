@@ -8,6 +8,7 @@ import {
   Stack,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -46,6 +47,8 @@ const GalleryPage = () => {
   const router = useRouter();
   const { username } = router.query;
   const { currentUser } = useAuth();
+
+  const theme = useTheme();
 
   const [zoom, setZoom] = useState(width === "xs" ? 2 : width === "sm" ? 3 : 5);
 
@@ -118,6 +121,12 @@ const GalleryPage = () => {
         direction="row"
         justifyContent={"space-between"}
         alignItems={"center"}
+        sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 1,
+          backgroundColor: theme.palette.background.default,
+        }}
       >
         <Typography variant="h2" component="h2">
           Images
@@ -128,7 +137,7 @@ const GalleryPage = () => {
             {isSubmitting ? "Updaing  ..." : "Update Gallery"}
           </Button>
         </Box> */}
-        <Box textAlign={"right"} m={4}>
+        <Box textAlign={"right"} m={3}>
           <Tooltip title="Zoom In">
             <IconButton onClick={() => setZoom((zoom) => zoom - 1)}>
               <AiOutlineZoomIn />
